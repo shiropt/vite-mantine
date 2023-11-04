@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core';
 import { Input as InputComponent } from '.';
-import { Wrapper } from '../../../molecules/storyWrapper';
+import { Wrapper } from '../../molecules/storyWrapper';
 
 export default {
   title: 'atoms/Input',
