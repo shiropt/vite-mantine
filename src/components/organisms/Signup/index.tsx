@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import { Anchor, Flex } from '@mantine/core';
+import { Anchor, ContainerProps, Flex } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { Center } from '../../molecules/Center';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
 
-type Props = {};
+type Props = ContainerProps;
 
-export const Signup: FC<Props> = () => {
+export const Signup: FC<Props> = (props) => {
   const { onSubmit, getInputProps } = useForm({
     initialValues: {
       email: '',
@@ -17,7 +17,7 @@ export const Signup: FC<Props> = () => {
     validate: zodResolver(schema.signup),
   });
   return (
-    <Center title="アカウント登録">
+    <Center {...props} title="アカウント登録">
       <Flex direction="column">
         <form onSubmit={onSubmit((values) => console.log(values))}>
           <Flex direction="column" mb="md">

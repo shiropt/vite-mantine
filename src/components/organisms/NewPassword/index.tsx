@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import { Flex } from '@mantine/core';
+import { ContainerProps, Flex } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { Center } from '../../molecules/Center';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
 
-type Props = {};
+type Props = ContainerProps;
 
-export const NewPassword: FC<Props> = () => {
+export const NewPassword: FC<Props> = (props) => {
   const { onSubmit, getInputProps } = useForm({
     initialValues: {
       password: '',
@@ -17,7 +17,7 @@ export const NewPassword: FC<Props> = () => {
   });
 
   return (
-    <Center title="新しいパスワードを設定">
+    <Center {...props} title="新しいパスワードを設定">
       <Flex direction="column">
         <form onSubmit={onSubmit((values) => console.log(values))}>
           <Flex direction="column" mb="md">
