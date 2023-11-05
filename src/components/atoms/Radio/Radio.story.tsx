@@ -1,5 +1,5 @@
 import { Box } from '@mantine/core';
-import { Wrapper } from '../../../molecules/storyWrapper';
+import { Wrapper } from '../../molecules/storyWrapper';
 import { Radio as RadioComponent } from '.';
 
 export default {
