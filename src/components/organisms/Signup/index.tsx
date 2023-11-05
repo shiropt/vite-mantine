@@ -1,25 +1,43 @@
 import { FC } from 'react';
-import { Anchor, Flex } from '@mantine/core';
+import { ContainerProps, Flex, Text } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
+import { Link, useNavigate } from 'react-router-dom';
 import { Center } from '../../molecules/Center';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
+import { path } from '../../../libs/Router/path';
+import { openOKButtonModal } from '../../molecules/Modals';
 
-type Props = {};
+type Props = ContainerProps;
 
-export const Signup: FC<Props> = () => {
-  const { onSubmit, getInputProps } = useForm({
+export const Signup: FC<Props> = (props) => {
+  const {
+    onSubmit,
+    getInputProps,
+    values: { email, password },
+  } = useForm({
     initialValues: {
       email: '',
       password: '',
     },
     validate: zodResolver(schema.signup),
   });
+  const navigate = useNavigate();
+
+  const openModal = () => {
+    openOKButtonModal(
+      <p>
+        アカウント登録確認メールを送信しました。 <br />
+        認証を完了後ログインしてください。
+      </p>,
+      () => navigate(path.login, { state: { email, password } })
+    );
+  };
   return (
-    <Center title="アカウント登録">
+    <Center {...props} title="アカウント登録">
       <Flex direction="column">
-        <form onSubmit={onSubmit((values) => console.log(values))}>
+        <form onSubmit={onSubmit(openModal)}>
           <Flex direction="column" mb="md">
             <Input
               mb="xs"
@@ -40,14 +58,12 @@ export const Signup: FC<Props> = () => {
             <Button mb="xl" type="submit">
               新規登録
             </Button>
-            <Button onClick={() => {}} variant="outline">
-              Googleで新規登録
-            </Button>
+            <Button variant="outline">Googleで新規登録</Button>
           </Flex>
         </form>
-        <Anchor mt="xl" ta="center" onClick={() => {}}>
-          アカウントをお持ちの方
-        </Anchor>
+        <Text mt="xl" ta="center">
+          <Link to={path.login}>アカウントをお持ちの方</Link>
+        </Text>
       </Flex>
     </Center>
   );
