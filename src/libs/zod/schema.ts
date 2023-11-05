@@ -25,4 +25,7 @@ export const schema = {
   passwordForgot: z.object({
     email: validates.email,
   }),
+  newPassword: z.object({
+    password: validates.password,
+  }),
 } as const;
