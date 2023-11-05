@@ -1,6 +1,6 @@
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import { Router } from './Router';
+import { Router } from './libs/Router';
 import { theme } from './theme';
 import './style/global.css';
 
