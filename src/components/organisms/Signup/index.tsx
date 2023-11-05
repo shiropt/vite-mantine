@@ -1,27 +1,43 @@
 import { FC } from 'react';
 import { ContainerProps, Flex, Text } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Center } from '../../molecules/Center';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
 import { path } from '../../../libs/Router/path';
+import { openOKButtonModal } from '../../molecules/Modals';
 
 type Props = ContainerProps;
 
 export const Signup: FC<Props> = (props) => {
-  const { onSubmit, getInputProps } = useForm({
+  const {
+    onSubmit,
+    getInputProps,
+    values: { email, password },
+  } = useForm({
     initialValues: {
       email: '',
       password: '',
     },
     validate: zodResolver(schema.signup),
   });
+  const navigate = useNavigate();
+
+  const openModal = () => {
+    openOKButtonModal(
+      <p>
+        アカウント登録確認メールを送信しました。 <br />
+        認証を完了後ログインしてください。
+      </p>,
+      () => navigate(path.login, { state: { email, password } })
+    );
+  };
   return (
     <Center {...props} title="アカウント登録">
       <Flex direction="column">
-        <form onSubmit={onSubmit((values) => console.log(values))}>
+        <form onSubmit={onSubmit(openModal)}>
           <Flex direction="column" mb="md">
             <Input
               mb="xs"
@@ -42,9 +58,7 @@ export const Signup: FC<Props> = (props) => {
             <Button mb="xl" type="submit">
               新規登録
             </Button>
-            <Button onClick={() => {}} variant="outline">
-              Googleで新規登録
-            </Button>
+            <Button variant="outline">Googleで新規登録</Button>
           </Flex>
         </form>
         <Text mt="xl" ta="center">
