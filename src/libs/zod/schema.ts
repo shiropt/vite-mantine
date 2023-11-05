@@ -22,4 +22,7 @@ export const schema = {
     email: validates.email,
     password: validates.password,
   }),
+  passwordForgot: z.object({
+    email: validates.email,
+  }),
 } as const;
