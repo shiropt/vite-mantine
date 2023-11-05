@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Flex, ContainerProps, Text } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Center } from '../../molecules/Center';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
@@ -12,13 +12,18 @@ type Props = ContainerProps;
 
 export const Login: FC<Props> = (props) => {
   const navigate = useNavigate();
-  const { onSubmit, getInputProps } = useForm({
+  const locationState = useLocation().state as { email: string; password: string };
+
+  const { onSubmit, getInputProps, setValues } = useForm({
     initialValues: {
       email: '',
       password: '',
     },
     validate: zodResolver(schema.login),
   });
+  useEffect(() => {
+    setValues({ email: locationState?.email ?? '', password: locationState?.password ?? '' });
+  }, []);
 
   return (
     <Center {...props} title="ログイン">
