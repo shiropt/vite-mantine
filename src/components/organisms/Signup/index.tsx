@@ -1,10 +1,12 @@
 import { FC } from 'react';
-import { Anchor, ContainerProps, Flex } from '@mantine/core';
+import { ContainerProps, Flex, Text } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
+import { Link } from 'react-router-dom';
 import { Center } from '../../molecules/Center';
 import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
+import { path } from '../../../libs/Router/path';
 
 type Props = ContainerProps;
 
@@ -45,9 +47,9 @@ export const Signup: FC<Props> = (props) => {
             </Button>
           </Flex>
         </form>
-        <Anchor mt="xl" ta="center" onClick={() => {}}>
-          アカウントをお持ちの方
-        </Anchor>
+        <Text mt="xl" ta="center">
+          <Link to={path.login}>アカウントをお持ちの方</Link>
+        </Text>
       </Flex>
     </Center>
   );
