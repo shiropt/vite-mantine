@@ -25,6 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
+    "storybook-addon-react-router-v6": "^2.0.9",
     "zod": "^3.22.4"
   },
   "devDependencies": {

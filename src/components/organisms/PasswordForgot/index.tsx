@@ -26,10 +26,10 @@ export const PasswordForgot: FC<Props> = (props) => {
 
   const openModal = () => {
     openOKButtonModal(
-      <p>
+      <>
         パスワード再設定メールを送信しました。 <br />
         内容をご確認の上、新しいパスワードを設定してください。
-      </p>,
+      </>,
       () => navigate(path.newPassword, { state: { email } })
     );
   };
