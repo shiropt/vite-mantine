@@ -8,6 +8,7 @@ import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
 import { path } from '../../../libs/Router/path';
 import { openOKButtonModal } from '../../molecules/Modals';
+import { areaLabel } from '../../../../test-utils/areaLabel';
 
 type Props = ContainerProps;
 
@@ -40,6 +41,7 @@ export const Signup: FC<Props> = (props) => {
         <form onSubmit={onSubmit(openModal)}>
           <Flex direction="column" mb="md">
             <Input
+              aria-label={areaLabel.email}
               mb="xs"
               label="メールアドレス"
               placeholder="メールアドレスを入力してください"
@@ -47,6 +49,7 @@ export const Signup: FC<Props> = (props) => {
               {...getInputProps('email')}
             />
             <Input
+              aria-label={areaLabel.password}
               mb="xs"
               label="パスワード"
               placeholder="パスワードを入力してください"
@@ -55,14 +58,16 @@ export const Signup: FC<Props> = (props) => {
             />
           </Flex>
           <Flex direction="column">
-            <Button mb="xl" type="submit">
+            <Button aria-label={areaLabel.signup} mb="xl" type="submit">
               新規登録
             </Button>
             <Button variant="outline">Googleで新規登録</Button>
           </Flex>
         </form>
         <Text mt="xl" ta="center">
-          <Link to={path.login}>アカウントをお持ちの方</Link>
+          <Link aria-label={areaLabel.login} to={path.login}>
+            アカウントをお持ちの方
+          </Link>
         </Text>
       </Flex>
     </Center>
