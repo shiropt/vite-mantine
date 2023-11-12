@@ -28,10 +28,10 @@ export const Signup: FC<Props> = (props) => {
 
   const openModal = () => {
     openOKButtonModal(
-      <p>
+      <>
         アカウント登録確認メールを送信しました。 <br />
         認証を完了後ログインしてください。
-      </p>,
+      </>,
       () => navigate(path.login, { state: { email, password } })
     );
   };
