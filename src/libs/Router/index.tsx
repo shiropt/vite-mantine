@@ -1,34 +1,12 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage } from '../../pages/Home.page';
-import { LoginPage } from '../../pages/Login/index.page';
-import { SignupPage } from '../../pages/Signup/index.page';
-import { PasswordForgotPage } from '../../pages/PasswordForgot/index.page';
-import { NewPasswordPage } from '../../pages/NewPassword/index.page';
+import { Routes, Route } from 'react-router-dom';
 import { path } from './path';
+import { CallbackPage } from '../../components/layouts/CallBack';
+import { AuthenticationGuard } from '../Auth0/AuthenticationGuard';
+import { HomePage } from '../../pages/Home.page';
 
-const router = createBrowserRouter([
-  {
-    path: path.root,
-    element: <HomePage />,
-  },
-  {
-    path: path.login,
-    element: <LoginPage />,
-  },
-  {
-    path: path.signup,
-    element: <SignupPage />,
-  },
-  {
-    path: path.passwordForgot,
-    element: <PasswordForgotPage />,
-  },
-  {
-    path: path.newPassword,
-    element: <NewPasswordPage />,
-  },
-]);
-
-export function Router() {
-  return <RouterProvider router={router} />;
-}
+export const RouteProvider = () => (
+  <Routes>
+    <Route path={path.callback} element={<CallbackPage />} />
+    <Route path={path.root} element={<AuthenticationGuard component={HomePage} />} />
+  </Routes>
+);
