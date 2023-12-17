@@ -7,7 +7,13 @@ export default {
 
 export const Loader = () => (
   <div>
-    <Welcome />
+    <Welcome
+      account={{
+        name: 'NAME',
+        email: 'sample.com',
+        picture: 'https://picsum.photos/id/237/200/300',
+      }}
+    />
     <LoaderComponent />;
   </div>
 );
