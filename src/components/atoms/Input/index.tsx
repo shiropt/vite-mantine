@@ -1,7 +1,7 @@
 import { Input as MantineInput, InputWrapperProps, InputProps } from '@mantine/core';
 import { FC } from 'react';
 
-type Props = InputProps & InputWrapperProps;
+type Props = InputProps & InputWrapperProps & { placeholder: string };
 
 export const Input: FC<Props> = (props) => (
   <MantineInput.Wrapper
