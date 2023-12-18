@@ -7,7 +7,7 @@ import { Input } from '../../atoms/Input';
 import { Button } from '../../atoms/Button';
 import { schema } from '../../../libs/zod/schema';
 import { path } from '../../../libs/Router/path';
-import { areaLabel } from '../../../../test-utils/areaLabel';
+import { ariaLabel } from '../../../../test-utils/ariaLabel';
 
 type Props = ContainerProps;
 
@@ -32,7 +32,7 @@ export const Login: FC<Props> = (props) => {
         <form onSubmit={onSubmit(() => navigate(path.root))}>
           <Flex direction="column" mb="md">
             <Input
-              aria-label={areaLabel.email}
+              aria-label={ariaLabel.email}
               mb="xs"
               label="メールアドレス"
               placeholder="メールアドレスを入力してください"
@@ -40,7 +40,7 @@ export const Login: FC<Props> = (props) => {
               {...getInputProps('email')}
             />
             <Input
-              aria-label={areaLabel.password}
+              aria-label={ariaLabel.password}
               mb="xs"
               label="パスワード"
               placeholder="パスワードを入力してください"
@@ -48,13 +48,13 @@ export const Login: FC<Props> = (props) => {
               {...getInputProps('password')}
             />
             <Text ta="right">
-              <Link aria-label={areaLabel.passwordForgot} to={path.passwordForgot}>
+              <Link aria-label={ariaLabel.passwordForgot} to={path.passwordForgot}>
                 パスワードをお忘れの方
               </Link>
             </Text>
           </Flex>
           <Flex direction="column">
-            <Button aria-label={areaLabel.login} mb="xl" type="submit">
+            <Button aria-label={ariaLabel.login} mb="xl" type="submit">
               ログイン
             </Button>
             <Button onClick={() => {}} variant="outline">
@@ -63,7 +63,7 @@ export const Login: FC<Props> = (props) => {
           </Flex>
         </form>
         <Text mt="xl" ta="center">
-          <Link aria-label={areaLabel.signup} to={path.signup}>
+          <Link aria-label={ariaLabel.signup} to={path.signup}>
             アカウントをお持ちでない方
           </Link>
         </Text>

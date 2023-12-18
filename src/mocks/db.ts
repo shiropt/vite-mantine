@@ -1,10 +1,11 @@
 // src/mocks/db.js
 import { factory, primaryKey } from '@mswjs/data';
 // import { setupServer } from 'msw/node';
+import { faker } from '@faker-js/faker';
 
 export const db = factory({
   todo: {
-    id: primaryKey(String),
+    id: primaryKey(faker.datatype.uuid),
     title: String,
     description: String,
     isDone: Boolean,

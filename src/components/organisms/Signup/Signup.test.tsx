@@ -1,14 +1,14 @@
 import { screen, render } from '@test-utils';
 import { Signup } from '.';
-import { areaLabel } from '../../../../test-utils/areaLabel';
+import { ariaLabel } from '../../../../test-utils/ariaLabel';
 import { path } from '../../../libs/Router/path';
 
 const setup = () => {
   const { user } = render(<Signup />, { route: path.signup });
-  const emailTextBox = screen.getByRole('textbox', { name: areaLabel.email });
-  const passwordTextBox = screen.getByRole('textbox', { name: areaLabel.password });
-  const signupButton = screen.getByRole('button', { name: areaLabel.signup });
-  const loginLink = screen.getByRole('link', { name: areaLabel.login });
+  const emailTextBox = screen.getByRole('textbox', { name: ariaLabel.email });
+  const passwordTextBox = screen.getByRole('textbox', { name: ariaLabel.password });
+  const signupButton = screen.getByRole('button', { name: ariaLabel.signup });
+  const loginLink = screen.getByRole('link', { name: ariaLabel.login });
 
   return { user, emailTextBox, passwordTextBox, signupButton, loginLink };
 };

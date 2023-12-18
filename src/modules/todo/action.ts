@@ -16,6 +16,10 @@ export const updateTodo = async (dispatch: Dispatch, todo: Todo) => {
   await request('PUT', `/todos/${todo.id}`, todo);
   fetchTodoList(dispatch);
 };
+export const addTodo = async (dispatch: Dispatch, todo: Todo) => {
+  await request('POST', '/todos', todo);
+  fetchTodoList(dispatch);
+};
 
 export const deleteTodo = async (dispatch: Dispatch, todo: Todo) => {
   await request('DELETE', `/todos/${todo.id}`);
@@ -26,6 +30,7 @@ export const actions = {
   fetchTodoList,
   deleteTodo,
   updateTodo,
+  addTodo,
 };
 
 export const request = async (
