@@ -1,11 +1,6 @@
 import { Dispatch } from '../../store';
-import { actionTypes } from './actionType';
-import { TodoAction, Todo } from './type';
-
-export const setTodoList = (todo: Todo[]): TodoAction => ({
-  type: actionTypes.SET_TODO,
-  payload: todo,
-});
+import { Todo } from './type';
+import { setTodoList } from './slice';
 
 export const fetchTodoList = async (dispatch: Dispatch) => {
   const todoList = await request('GET', '/todos');
