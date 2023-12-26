@@ -10,8 +10,20 @@ import { actions as todoActions } from '../modules/todo';
 import { CheckBox } from '../components/atoms/CheckBox';
 import { Input } from '../components/atoms/Input';
 import { TextArea } from '../components/atoms/TextArea';
+import {
+  useGetTodListQuery,
+  useAddTodoMutation,
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} from '../modules/todo/api';
+import { Loader } from '../components/layouts/Loader';
 
 export function HomePage() {
+  const { data: todoList, isFetching, isLoading } = useGetTodListQuery(undefined);
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [addTodo] = useAddTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
+
   const [editId, setEditId] = useState('');
   const { onSubmit, getInputProps, reset, setValues } = useForm({
     initialValues: {
@@ -20,6 +32,7 @@ export function HomePage() {
       isDone: false,
     },
   });
+
   const { logout, user } = useAuth0();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,64 +45,78 @@ export function HomePage() {
   }, []);
 
   const account = useSelector((state) => state.account);
-  const todoList = useSelector((state) => state.todo);
 
-  const rows = todoList.map((todo) => (
-    <Table.Tr key={todo.id}>
-      <Table.Td>
-        <CheckBox
-          checked={todo.isDone}
-          onChange={async () => todoActions.updateTodo(dispatch, { ...todo, isDone: !todo.isDone })}
-        />
-      </Table.Td>
-      <Table.Td>{todo.title}</Table.Td>
-      <Table.Td>{todo.description}</Table.Td>
-      <Table.Td>
-        {editId === todo.id ? (
-          <>
+  const rows =
+    isFetching || isLoading || !todoList ? (
+      <Table.Tr>
+        <Table.Td>
+          <Loader />
+        </Table.Td>
+      </Table.Tr>
+    ) : (
+      todoList.map((todo) => (
+        <Table.Tr key={todo.id}>
+          <Table.Td>
+            <CheckBox
+              checked={todo.isDone}
+              onChange={async () =>
+                todoActions.updateTodo(dispatch, { ...todo, isDone: !todo.isDone })
+              }
+            />
+          </Table.Td>
+          <Table.Td>{todo.title}</Table.Td>
+          <Table.Td>{todo.description}</Table.Td>
+          <Table.Td>
+            {editId === todo.id ? (
+              <>
+                <Button
+                  onClick={() => {
+                    setEditId('');
+                    reset();
+                  }}
+                >
+                  キャンセル
+                </Button>
+                <Button type="submit">編集完了</Button>
+              </>
+            ) : (
+              <Button
+                onClick={() => {
+                  setEditId(todo.id!);
+                  setValues({
+                    isDone: todo.isDone,
+                    title: todo.title,
+                    description: todo.description,
+                  });
+                }}
+                color="green"
+              >
+                編集
+              </Button>
+            )}
+          </Table.Td>
+          <Table.Td>
             <Button
-              onClick={() => {
-                setEditId('');
-                reset();
+              onClick={async () => {
+                deleteTodo(todo.id);
               }}
+              color="red"
             >
-              キャンセル
+              削除
             </Button>
-            <Button type="submit">編集完了</Button>
-          </>
-        ) : (
-          <Button
-            onClick={() => {
-              setEditId(todo.id!);
-              setValues({ isDone: todo.isDone, title: todo.title, description: todo.description });
-            }}
-            color="green"
-          >
-            編集
-          </Button>
-        )}
-      </Table.Td>
-      <Table.Td>
-        <Button
-          onClick={async () => {
-            await todoActions.deleteTodo(dispatch, todo);
-          }}
-          color="red"
-        >
-          削除
-        </Button>
-      </Table.Td>
-    </Table.Tr>
-  ));
+          </Table.Td>
+        </Table.Tr>
+      ))
+    );
   return (
     <Box ta="center">
       <form
         onSubmit={onSubmit((v) => {
           if (editId) {
-            todoActions.updateTodo(dispatch, { ...v, id: editId });
+            updateTodo({ ...v, id: editId });
             setEditId('');
           } else {
-            todoActions.addTodo(dispatch, v);
+            addTodo(v);
           }
           reset();
         })}

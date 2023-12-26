@@ -9,7 +9,7 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     setTodoList(state, action: PayloadAction<Todo[]>) {
-      return action.payload;
+      state = action.payload;
     },
   },
 });
